@@ -8,6 +8,23 @@ const db = new sqlite3.Database(path.resolve(__dirname,'./cart.db'),sqlite3.OPEN
     console.log('Connected to the database.');
   });
 
+/*
+CREATE TABLE users (
+id INTEGER PRIMARY KEY AUTOINCREMENT ,
+username TEXT NOT NULL,
+password TEXT NOT NULL UNIQUE
+, coins);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE products (
+pid INTEGER PRIMARY KEY AUTOINCREMENT ,
+p_name TEXT NOT NULL UNIQUE ,
+price INTEGER NOT NULL );
+CREATE TABLE cart (
+usr_id INTEGER NOT NULL PRIMARY KEY ,
+pid INTEGER NOT NULL,
+qnty INTEGER  NOT NULL);
+ */
+
 
 ///returns all data of query
 getall = (query,params)=>{
@@ -30,11 +47,13 @@ run =(query,params)=>{
 };
 
 
-data= async() => {
-    let user = await getall('SELECT * FROM users',[])
-    console.log(user);
+data= async(user) => {
+    let id = await getall('SELECT * FROM users where username=?',[user])
+    return id;
 }
+
+
 // const user = data()
 // console.log(user);
-data()
-module.exports={getall,run,db}
+//data()
+module.exports={getall,run,db,data}

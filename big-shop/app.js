@@ -25,6 +25,9 @@ app.get('/login',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/login
 app.get('/register',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/register.html'))});
 app.post('/register',Register.register);
 app.post('/login',Login.login);
+//add below routes after auth
+app.post('/add',cart.cart);
+app.post('/buy',cart.buy)
 
 app.use((req,res,next)=>{
             if(!req.session.user){
