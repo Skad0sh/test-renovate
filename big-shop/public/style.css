@@ -6,14 +6,14 @@ body{
     font-size: .9rem;
     font-weight: 400;
     line-height: 1.6;
-    color: #212529;
     text-align: left;
-    background-color: #f5f8fa;
+
 }
+
 
 .navbar-laravel
 {
-    box-shadow: 0 2px 4px rgba(0,0,0,.04);
+    box-shadow: 0 2px 4px rgba(156, 152, 152, 0.04);
 }
 
 .navbar-brand , .nav-link, .my-form, .login-form
@@ -44,3 +44,21 @@ body{
     margin-left: 0;
     margin-right: 0;
 }
+
+.show-cart li {
+    display: flex;
+  }
+  .card {
+    margin-bottom: 20px;
+  }
+  .card-img-top {
+    width: 200px;
+    height: 200px;
+    align-self: center;
+}
+
+.card-block {
+margin-left: 10px;
+
+}
+

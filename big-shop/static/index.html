@@ -4,7 +4,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/card.css">
+    <script src="/index.js"></script>
 
     <link rel="icon" href="Favicon.png">
 
@@ -23,11 +25,11 @@
 
     <title>flag-shop</title>
 </head>
-<body>
+<body style="background-color:#232427">
 
 <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
     <div class="container">
-        <a class="navbar-brand" href="#">FLag-shop</a>
+        <a class="navbar-brand" style="color: darkgray;" href="#">FLag-shop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,22 +37,34 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">cart</a>
-                    <a class="nav-link" href="/logout">logout</a>
+                    <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart" style="color: darkgray;"></i></a>
                 </li>
+                <li><a class="nav-link" style="color: darkgray;" href="/logout">logout</a></li>
             </ul>
 
         </div>
     </div>
 </nav>
-<div class="card">
-    <div class="card-header">
-      Featured
+
+
+<!-- Main -->
+<div class="container-card" style="height:200px;display: flex;justify-content: center;align-items: center;flex-wrap: wrap;">
+    <div class="card">
+      <div class="box">
+        <div class="content">
+          <h2>01</h2>
+          <h3>Card One</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, totam velit? Iure nemo labore inventore?</p>
+          <button>add to cart</button>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
+    
+</div>
+
+  
+
+
+
 </body>
+</html>
