@@ -37,6 +37,10 @@ body{
 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+    margin-left: 400px;
+    margin-top: 50px;
+    width: 1000px;
+    height: 500px;
 }
 
 .login-form .row
@@ -45,17 +49,7 @@ body{
     margin-right: 0;
 }
 
-.show-cart li {
-    display: flex;
-  }
-  .card {
-    margin-bottom: 20px;
-  }
-  .card-img-top {
-    width: 200px;
-    height: 200px;
-    align-self: center;
-}
+
 
 .card-block {
 margin-left: 10px;

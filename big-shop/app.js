@@ -26,8 +26,7 @@ app.get('/register',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/re
 app.post('/register',Register.register);
 app.post('/login',Login.login);
 //add below routes after auth
-app.post('/add',cart.cart);
-app.post('/buy',cart.buy)
+
 
 app.use((req,res,next)=>{
             if(!req.session.user){
@@ -38,7 +37,11 @@ app.use((req,res,next)=>{
             next();
 })
 
-app.get('/products',cart.products)
+app.get('/products',cart.products);
+app.post('/add',cart.cart);
+app.post('/buy',cart.buy);
+app.get('/cart',cart.show_cart);
+app.get('/buyed',cart.show_buy);
 
 app.listen(3000,()=>{
     console.log("server started at port 3000")

@@ -14,6 +14,7 @@ module.exports.products=function(req,res){
 }
 
 module.exports.cart=async function(req,res){
+            console.log(req.body);
             if(!req.body.pid){
                 res.json({message:"invalid prameters"})
                 res.end();
@@ -21,7 +22,7 @@ module.exports.cart=async function(req,res){
             }
             const query="INSERT INTO cart (usr_id,pid) VALUES (?,?)";
             DB=db.db;
-            let row= await db.data("Aneesh");
+            let row= await db.data(req.session.user);
             let product= await db.getall("SELECT * FROM products WHERE pid=?",[req.body.pid])
             console.log(product)
             console.log(row);
@@ -47,7 +48,7 @@ module.exports.buy=async function(req,res){
     }
     const query="INSERT INTO buy (usr_id,pid,qnty) VALUES (?,?,?)";
     DB=db.db;
-    let row= await db.data("Aneesh");
+    let row= await db.data(req.session.user);
     let product= await db.getall("SELECT * FROM products WHERE  pid=?",[req.body.pid])
     console.log(product[0].price)
     console.log(row[0].coins);
@@ -61,9 +62,42 @@ module.exports.buy=async function(req,res){
                 res.end();
                 return;
             }
+            let coins=row[0].coins-product[0].price;
+            coins= coins>=0 ? coins : 0;
+            const q2='UPDATE users SET coins=? WHERE uid=?';
+            params=[coins,row.id];
+            //reduce coins
+
             res.json({message:"product buyed"})
         });
     }else{
         res.json({message:"you have not enough money"})
     }
+}
+
+module.exports.show_cart=async(req,res)=>{
+    let row= await db.data(req.session.user);
+    const query='SELECT * FROM cart WHERE usr_id=?';
+    params=[row.id];
+    db.db.all(query,params,(err,row)=>{
+        if(err){
+            res.json({message:"database error"})
+            return;
+        }
+        res.json(row);
+    });
+}
+
+module.exports.show_buy=async(req,res)=>{
+    let row= await db.data(req.session.user);
+    const query='SELECT * FROM buy WHERE usr_id=?';
+    params=[row.id];
+    db.db.all(query,params,(err,row)=>{
+        if(err){
+            console.log(err)
+            res.json({message:"database error"})
+            return;
+        }
+        res.json(row);
+    })
 }
