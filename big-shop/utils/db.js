@@ -1,5 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
+const { resolve } = require('path');
 const path =require('path');
+
 
 const db = new sqlite3.Database(path.resolve(__dirname,'./cart.db'),sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -19,10 +21,14 @@ CREATE TABLE products (
 pid INTEGER PRIMARY KEY AUTOINCREMENT ,
 p_name TEXT NOT NULL UNIQUE ,
 price INTEGER NOT NULL );
-CREATE TABLE cart (
+CREATE TABLE buy (
 usr_id INTEGER NOT NULL PRIMARY KEY ,
 pid INTEGER NOT NULL,
 qnty INTEGER  NOT NULL);
+CREATE TABLE cart (
+usr_id INTEGER NOT NULL PRIMARY KEY ,
+pid INTEGER NOT NULL);
+
  */
 
 
@@ -38,22 +44,32 @@ getall = (query,params)=>{
 };
 
 // db.run(`INSERT INTO users(username,password,coins) VALUES(?,?,?)`, ['sadf','asdfa',100], function(err) {
-run =(query,params)=>{
-    db.run(query,params, function(err) {
-        if (err) {
-        return console.log(err.message);
-        }
-    });
+run =async(query,params)=>{
+    return new Promise((resolve, reject)=>{
+        db.run(query,params, function(err) {
+            if (err) reject(err);
+            resolve()
+        });
+    })
+    
 };
 
 
 data= async(user) => {
-    let id = await getall('SELECT * FROM users where username=?',[user])
-    return id;
+    let row = await getall('SELECT * FROM users where username=?',[user])
+    let cart = await getall('SELECT * FROM cart where usr_id=?',[row[0].id])
+
+    return [row[0],cart[0]];
 }
 
+all_products=async() => {
+    let p = await getall('SELECT * FROM products',[])  
+    return p;
+}
+//all_products()
 
-// const user = data()
+
+
 // console.log(user);
 //data()
-module.exports={getall,run,db,data}
+module.exports={getall,run,db,data,all_products}

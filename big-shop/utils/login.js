@@ -33,3 +33,7 @@ module.exports.login=function(req,res){
 
 };
 
+module.exports.logout=function(req,res){
+    delete req.session.user;
+    res.redirect('/login')
+}

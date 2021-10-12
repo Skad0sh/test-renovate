@@ -8,19 +8,36 @@ render = (num,product,price)=>{
         <h3>${product}</h3>
         <p>price : ${price}</p>
 
-        <button onclick='add(${num})'>add to cart</button>
+        <button onclick='add(${num})'>buy</button>
     </div>
     </div>
     </div>`
     
     card.innerHTML+=template;
 }
+render_buy = (num,product,price)=>{
+  const card=document.getElementById('card');
+  const template=`<div class="card">
+  <div class="box">
+  <div class="content">
+      <h2>${num}</h2>
+      <h3>${product}</h3>
+      <p>price : ${price}</p>
+
+      <button onclick='alert(open)'>open</button>
+  </div>
+  </div>
+  </div>`
+  
+  card.innerHTML+=template;
+}
 
 
  add=async (e) => {
   const formData = new FormData();
-  formData.append('pid',e)
-    let response = await fetch('/add', {
+  formData.append('pid',e);
+  formData.append('product_id',e)
+    let response = await fetch('/buy', {
       method: 'POST',
       body: formData
     });
@@ -28,17 +45,23 @@ render = (num,product,price)=>{
     let result = await response.json();
 
     alert(result.message);
+    if(result.message==="product buyed")
+    location.reload();
     
       
   };
 
 products=async()=>{
-    let response = await fetch('/api/products' ,{credentials: "same-origin"});
+    let response = await fetch('/api/cart' ,{credentials: "same-origin"});
 
     let result = await response.json();
     console.log(result)
    for(var i=0;i<result.length;i++){
-       render(result[i].pid,result[i].p_name,result[i].price)
+       if(result[i].buy===1){
+        render_buy(result[i].pid,result[i].p_name,result[i].price)
+       }else{
+          render(result[i].pid,result[i].p_name,result[i].price)
+       }
    }
    let resp= await fetch('/api/user',{credentials:"same-origin"});
    let user= await resp.json()

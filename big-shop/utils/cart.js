@@ -1,16 +1,8 @@
 const db=require('./db')
 
-module.exports.products=function(req,res){
-            const query="SELECT * FROM products";
-            db.getall(query,[])
-            .then((row)=>{
-                res.json(row);
-                res.end()
-                return;
-            })
-            .catch(()=>{
-                res.json({message:"db error"})
-            })
+module.exports.products=async function(req,res){
+            pr=await db.all_products();
+            res.json(pr)
 }
 
 module.exports.cart=async function(req,res){
@@ -20,13 +12,13 @@ module.exports.cart=async function(req,res){
                 res.end();
                 return;
             }
-            const query="INSERT INTO cart (usr_id,pid) VALUES (?,?)";
+            const query="INSERT INTO cart (usr_id,pid,BUY) VALUES (?,?,?)";
             DB=db.db;
             let row= await db.data(req.session.user);
-            let product= await db.getall("SELECT * FROM products WHERE pid=?",[req.body.pid])
+            let product= await db.all_products;
             console.log(product)
             console.log(row);
-                params=[row.id,req.body.pid]
+                params=[row[0].id,req.body.pid,0]
                 DB.run(query,params, function(err) {
                     if (err) {
                         console.log(err);
@@ -40,64 +32,64 @@ module.exports.cart=async function(req,res){
 }  
 
 
+
+
+
+
+
 module.exports.buy=async function(req,res){
     if(!req.body.pid||!req.body.product_id){
         res.json({message:"invalid prameters"})
         res.end();
         return;
     }
-    const query="INSERT INTO buy (usr_id,pid,qnty) VALUES (?,?,?)";
-    DB=db.db;
-    let row= await db.data(req.session.user);
+    
+    let user= await db.data(req.session.user);
     let product= await db.getall("SELECT * FROM products WHERE  pid=?",[req.body.pid])
-    console.log(product[0].price)
-    console.log(row[0].coins);
-    console.log(row[0].coins>=product[0].price);
-    if(row[0].coins>=product[0].price){
-        params=[row[0].id,req.body.product_id,req.body.qnty]
-        DB.run(query,params, function(err) {
-            if (err) {
-                console.log(err);
-                res.json({message:'error while updating db'})
-                res.end();
-                return;
-            }
-            let coins=row[0].coins-product[0].price;
-            coins= coins>=0 ? coins : 0;
-            const q2='UPDATE users SET coins=? WHERE uid=?';
-            params=[coins,row.id];
-            //reduce coins
-
+    
+    if(user[0].coins>=product[0].price){
+        const query="UPDATE cart SET buy=? WHERE pid=? AND usr_id=?";
+        const query2='UPDATE users SET coins=? WHERE id=?'
+        balance=user[0].coins-product[0].price
+        balance= (balance<0) ? 0 :balance;
+        params=[1,req.body.product_id,user[0].id];
+        try {
+            await db.run(query,params);
+            await db.run(query2,[balance,user[0].id])
             res.json({message:"product buyed"})
-        });
+        } catch (error) {
+            console.log(err)
+            res.json({message:"cannot buy product"})
+        }   
     }else{
         res.json({message:"you have not enough money"})
     }
 }
 
 module.exports.show_cart=async(req,res)=>{
-    let row= await db.data(req.session.user);
-    const query='SELECT * FROM cart WHERE usr_id=?';
-    params=[row.id];
+    let row1= await db.data(req.session.user);
+    const query='SELECT pid,buy FROM cart WHERE usr_id=?';
+    params=[row1[0].id];
+    const all= await db.all_products()
+    let cart_products=[]
     db.db.all(query,params,(err,row)=>{
         if(err){
             res.json({message:"database error"})
             return;
-        }
-        res.json(row);
+        }  
+        row.forEach(element => {
+            all[element.pid-1].buy=element.buy
+            console.log(all[element.pid-1])
+            cart_products.push(all[element.pid-1])
+        });
+        res.json(cart_products)
     });
 }
 
-module.exports.show_buy=async(req,res)=>{
+
+module.exports.user=async(req,res)=>{
     let row= await db.data(req.session.user);
-    const query='SELECT * FROM buy WHERE usr_id=?';
-    params=[row.id];
-    db.db.all(query,params,(err,row)=>{
-        if(err){
-            console.log(err)
-            res.json({message:"database error"})
-            return;
-        }
-        res.json(row);
-    })
+    row=row[0];
+    delete row.password;
+    res.json([row]);
 }
