@@ -2,7 +2,6 @@ db = require('./db').db
 
 module.exports.register=function(req,res){
     console.log(req.body)
-    var mydate = new Date();
     if(!req.body.name||!req.body.password){
         res.json({message:'error while registring'})
         res.end()

@@ -24,7 +24,7 @@ render_buy = (num,product,price)=>{
       <h3>${product}</h3>
       <p>price : ${price}</p>
 
-      <button onclick='alert(open)'>open</button>
+      <button onclick=open_product(${num})>open</button>
   </div>
   </div>
   </div>`
@@ -50,6 +50,19 @@ render_buy = (num,product,price)=>{
     
       
   };
+
+open_product=async(e)=>{
+  const formData = new FormData();
+  formData.append('pid',e);
+    let response = await fetch('/open', {
+      method: 'POST',
+      body: formData
+    });
+
+    let result = await response.json();
+
+    alert(result.message);
+}
 
 products=async()=>{
     let response = await fetch('/api/cart' ,{credentials: "same-origin"});

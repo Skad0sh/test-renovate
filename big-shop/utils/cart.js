@@ -31,12 +31,6 @@ module.exports.cart=async function(req,res){
     
 }  
 
-
-
-
-
-
-
 module.exports.buy=async function(req,res){
     if(!req.body.pid||!req.body.product_id){
         res.json({message:"invalid prameters"})
@@ -86,10 +80,39 @@ module.exports.show_cart=async(req,res)=>{
     });
 }
 
-
 module.exports.user=async(req,res)=>{
     let row= await db.data(req.session.user);
     row=row[0];
     delete row.password;
     res.json([row]);
+}
+
+module.exports.open=async(req,res)=>{
+    flag={
+        1:"flag{abc_qwerty}",
+        2 :"not the flag"
+    }
+    let product_id=parseInt(req.body.pid);
+    let row= await db.data(req.session.user);
+    let cart=[row[1]];
+    console.log(cart,product_id)
+    try {
+        cart.forEach(el=>{
+            console.log(el.pid)
+            console.log(el.pid===product_id);
+            if(el.pid===product_id){
+                
+                if(el.buy===1){  
+                    res.json({message:flag[el.pid]});
+                    res.end();
+                    return;
+                }
+            }
+            if(el==cart[cart.length-1]) throw "error";
+        });
+    } catch (error) {
+        console.log(error);
+        res.json({message:"cannot open this product"});
+    }
+
 }

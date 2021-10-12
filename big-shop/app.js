@@ -25,9 +25,6 @@ app.get('/login',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/login
 app.get('/register',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/register.html'))});
 app.post('/register',Register.register);
 app.post('/login',Login.login);
-//app.post('/buy2',cart.buy2);
-//add below routes after auth
-
 
 app.use((req,res,next)=>{
             if(!req.session.user){
@@ -43,6 +40,7 @@ app.get('/api/user',cart.user);
 app.get('/api/cart',cart.show_cart);
 app.post('/add',cart.cart);
 app.post('/buy',cart.buy);
+app.post('/open',cart.open);
 app.get('/logout',Login.logout);
 
 app.listen(3000,()=>{
