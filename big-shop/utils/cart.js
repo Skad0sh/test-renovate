@@ -15,6 +15,12 @@ module.exports.cart=async function(req,res){
             const query="INSERT INTO cart (usr_id,pid,BUY) VALUES (?,?,?)";
             DB=db.db;
             let row= await db.data(req.session.user);
+            cart_now=row[1]
+            if(cart_now.some(e =>e.pid==req.body.pid)){
+                res.json({message:"product already added"});
+                res.end()
+                return;
+            }
             let product= await db.all_products;
             console.log(product)
             console.log(row);
@@ -32,7 +38,7 @@ module.exports.cart=async function(req,res){
 }  
 
 module.exports.buy=async function(req,res){
-    if(!req.body.pid||!req.body.product_id){
+    if(!req.body.pid){
         res.json({message:"invalid prameters"})
         res.end();
         return;
@@ -40,13 +46,13 @@ module.exports.buy=async function(req,res){
     
     let user= await db.data(req.session.user);
     let product= await db.getall("SELECT * FROM products WHERE  pid=?",[req.body.pid])
-    
-    if(user[0].coins>=product[0].price){
+   // console.log("[+]product",)
+    if(user[0].coins>=product[0].price||product[0].pid===1){
         const query="UPDATE cart SET buy=? WHERE pid=? AND usr_id=?";
         const query2='UPDATE users SET coins=? WHERE id=?'
         balance=user[0].coins-product[0].price
         balance= (balance<0) ? 0 :balance;
-        params=[1,req.body.product_id,user[0].id];
+        params=[1,req.body.pid,user[0].id];
         try {
             await db.run(query,params);
             await db.run(query2,[balance,user[0].id])
@@ -54,6 +60,8 @@ module.exports.buy=async function(req,res){
         } catch (error) {
             console.log(err)
             res.json({message:"cannot buy product"})
+            res.end()
+            return;
         }   
     }else{
         res.json({message:"you have not enough money"})
@@ -94,25 +102,25 @@ module.exports.open=async(req,res)=>{
     }
     let product_id=parseInt(req.body.pid);
     let row= await db.data(req.session.user);
-    let cart=[row[1]];
+    let cart=row[1];
     console.log(cart,product_id)
     try {
         cart.forEach(el=>{
             console.log(el.pid)
             console.log(el.pid===product_id);
             if(el.pid===product_id){
-                
-                if(el.buy===1){  
+                if(el.buy===1){
                     res.json({message:flag[el.pid]});
                     res.end();
-                    return;
+                    throw "sucess";
                 }
             }
             if(el==cart[cart.length-1]) throw "error";
         });
     } catch (error) {
         console.log(error);
-        res.json({message:"cannot open this product"});
+        if(error==="error") res.json({message:"cannot open this product"});
+        return;
     }
 
 }

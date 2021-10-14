@@ -15,6 +15,24 @@ render = (num,product,price)=>{
     
     card.innerHTML+=template;
 }
+
+render_not = (num,product,price)=>{
+  const card=document.getElementById('card');
+  const template=`<div class="card">
+  <div class="box">
+  <div class="content">
+      <h2>${num}</h2>
+      <h3>${product}</h3>
+      <p>price : ${price}</p>
+
+      <h3>sorry!, you have not enough money to buy</h3>
+  </div>
+  </div>
+  </div>`
+  
+  card.innerHTML+=template;
+}
+
 render_buy = (num,product,price)=>{
   const card=document.getElementById('card');
   const template=`<div class="card">
@@ -36,7 +54,6 @@ render_buy = (num,product,price)=>{
  add=async (e) => {
   const formData = new FormData();
   formData.append('pid',e);
-  formData.append('product_id',e)
     let response = await fetch('/buy', {
       method: 'POST',
       body: formData
@@ -72,7 +89,12 @@ products=async()=>{
    for(var i=0;i<result.length;i++){
        if(result[i].buy===1){
         render_buy(result[i].pid,result[i].p_name,result[i].price)
-       }else{
+       }
+       else if(result[i].pid==1)
+       {
+        render_not(result[i].pid,result[i].p_name,result[i].price)
+       }
+       else{
           render(result[i].pid,result[i].p_name,result[i].price)
        }
    }

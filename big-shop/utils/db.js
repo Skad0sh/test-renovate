@@ -59,7 +59,7 @@ data= async(user) => {
     let row = await getall('SELECT * FROM users where username=?',[user])
     let cart = await getall('SELECT * FROM cart where usr_id=?',[row[0].id])
 
-    return [row[0],cart[0]];
+    return [row[0],cart];
 }
 
 all_products=async() => {
