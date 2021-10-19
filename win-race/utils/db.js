@@ -1,5 +1,4 @@
 const sqlite3 = require('sqlite3').verbose();
-const { resolve } = require('path');
 const path =require('path');
 
 
@@ -68,8 +67,13 @@ all_products=async() => {
 }
 //all_products()
 
-
+check=async(username)=>{
+    let p = await getall('SELECT * FROM users WHERE username=?',[username])
+    if(p[0]){
+        throw "user already exists"
+    }  
+}
 
 // console.log(user);
 //data()
-module.exports={getall,run,db,data,all_products}
+module.exports={getall,run,db,data,all_products,check}

@@ -8,25 +8,22 @@ module.exports.login=function(req,res){
         res.end()
         return;
     }
-    params=[req.body.name]
-    query="SELECT * FROM users WHERE username=?";
+    params=[req.body.name,req.body.password]
+    query="SELECT * FROM users WHERE username=? and password=?";
     
     db.getall(query,params)
     .then((row)=>{
+        console.log(row)
             if(!row[0]){
-                res.json({message:"user dosenot exits"})
+                res.json({message:"Invalid username or password"})
                 res.end()
                 return;
-            }
-             row=row[0];
-             if(req.body.password===row.password){
-                req.session.user=row.username;
-                console.log('logged in',req.session.user)
+            }          
+            else{
+                req.session.user=row[0].username;
+                console.log('logged in as :',req.session.user)
                 res.json({message:'Logged in sucessfully'})
             
-            }else{
-                console.log("worng")
-                res.json({message:'Invalid username or password'})
             }
         })
     
