@@ -29,7 +29,6 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
     <div class="container">
         <a class="navbar-brand" style="color: darkgray;" href="#">FLag-shop</a>
-        
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -37,12 +36,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart" style="color: darkgray;"></i></a>
+                    <a class="nav-link" style="color: darkgray;" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"id='coins' style="color: darkgray;"></a>
+                    <a class="nav-link" style="color: darkgray;" href="/register">Register</a>
                 </li>
-                <li><a class="nav-link" style="color: darkgray;" href="/logout">logout</a></li>
             </ul>
 
         </div>
@@ -54,13 +52,30 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header" >Gift</div>
+                    <div class="card-header" >Login</div>
                     <div class="card-body">
                         <form id="formElem">
                             <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right" >Code</label>
+                                <label for="email_address" class="col-md-4 col-form-label text-md-right" >Username</label>
                                 <div class="col-md-6">
-                                    <input type="text" id="email_address" class="form-control" name="code" required autofocus>
+                                    <input type="text" id="email_address" class="form-control" name="name" required autofocus>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="password" class="form-control" name="password" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" style="color: darkgray;" > Remember Me
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -86,12 +101,17 @@
       e.preventDefault();
       console.log(new FormData(formElem))
   
-      let response = await fetch('/transfer', {
+      let response = await fetch('/login', {
         method: 'POST',
         body: new FormData(formElem)
       });
   
       let result = await response.json();
+  
+      alert(result.message);
+      if(result.message==="Logged in sucessfully"){
+        window.location.href='/';
+      }
         
     };
   </script>

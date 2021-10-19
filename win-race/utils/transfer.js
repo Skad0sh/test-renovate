@@ -1,7 +1,7 @@
 const db= require('./db');
 
-async function add_balance(){
-    let user=await db.data("Aneesh");
+async function add_balance(user_name){
+    let user=await db.data(user_name);
     let coins=user[0].coins+100;
     console.log('add_balance :',user[0].coins);
     const query='UPDATE users SET coins=? where username=?';
@@ -10,8 +10,8 @@ async function add_balance(){
 
 };
 
-async function update_gift(){
-    let user=await db.data("Aneesh");
+async function update_gift(user_name){
+    let user=await db.data(user_name);
     console.log('add_balance :',user[0].coins);
     let gift=user[0].gift-100
     const query2='UPDATE users SET gift=? where username=?'
@@ -22,12 +22,12 @@ async function update_gift(){
 module.exports.transfer=async(req,res)=>{
     if(!req.body.code) res.json({message:"Invadid code"})
     let code = req.body.code;
-    let user=await db.data("Aneesh");
+    let user=await db.data(req.session.user);
     let gift=user[0].gift;
     if(gift>=100){
         
-        const trans1= add_balance();
-        const trans2=update_gift();
+        const trans1= add_balance(req.session.user);
+        const trans2=update_gift(req.session.user);
         await trans1;
         await trans2;
         res.json({message:"congratz"})

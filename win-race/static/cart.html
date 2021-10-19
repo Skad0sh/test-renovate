@@ -1,11 +1,10 @@
-
 <!doctype html>
 <html lang="en">
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -16,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/card.css">
+    <script src="/cart.js"></script>
 
     <link rel="icon" href="Favicon.png">
 
@@ -37,7 +38,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart" style="color: darkgray;"></i></a>
+                    <a class="nav-link" style="color: darkgray;" href="/">products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"id='coins' style="color: darkgray;"></a>
@@ -49,54 +50,13 @@
     </div>
 </nav>
 
-<main class="login-form">
-    <div class="cotainer" >
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header" >Gift</div>
-                    <div class="card-body">
-                        <form id="formElem">
-                            <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right" >Code</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="email_address" class="form-control" name="code" required autofocus>
-                                </div>
-                            </div>
 
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-                                
-                            </div>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
+<!-- Main -->
+<div class="container-card" id='card' style="height:200px;display: flex;justify-content: center;align-items: center;flex-wrap: wrap;">
+    
+</div>
 
-</main>
-
-
-<script>
-    formElem.onsubmit = async (e) => {
-      e.preventDefault();
-      console.log(new FormData(formElem))
   
-      let response = await fetch('/transfer', {
-        method: 'POST',
-        body: new FormData(formElem)
-      });
-  
-      let result = await response.json();
-        
-    };
-  </script>
-
-
 
 
 
