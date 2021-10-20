@@ -7,10 +7,10 @@ module.exports.register=async function(req,res){
         res.end()
         return;
     }
-    params=[req.body.name,req.body.password,100]
-    query="INSERT INTO users(username,password,coins) VALUES(?,?,?)";
+    params=[req.body.name,req.body.password,100,100]
+    query="INSERT INTO users(username,password,coins,gift) VALUES(?,?,?,?)";
     try {
-        await db.check(req.body.username)
+        await db.check(req.body.name)
         await db.run(query,params);
         res.json({message:"user registed sucessfully"});
         

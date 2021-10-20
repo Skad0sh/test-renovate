@@ -47,7 +47,7 @@ module.exports.buy=async function(req,res){
     let user= await db.data(req.session.user);
     let product= await db.getall("SELECT * FROM products WHERE  pid=?",[req.body.pid])
    // console.log("[+]product",)
-    if(user[0].coins>=product[0].price||product[0].pid===1){
+    if(user[0].coins>=product[0].price){
         const query="UPDATE cart SET buy=? WHERE pid=? AND usr_id=?";
         const query2='UPDATE users SET coins=? WHERE id=?'
         balance=user[0].coins-product[0].price

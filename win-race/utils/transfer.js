@@ -5,17 +5,17 @@ async function add_balance(user_name){
     let coins=user[0].coins+100;
     console.log('add_balance :',user[0].coins);
     const query='UPDATE users SET coins=? where username=?';
-    params=[coins,"Aneesh"];
+    params=[coins,user_name];
     await db.run(query,params);
 
 };
 
 async function update_gift(user_name){
     let user=await db.data(user_name);
-    console.log('add_balance :',user[0].coins);
+    console.log('update:',user[0].coins);
     let gift=user[0].gift-100
     const query2='UPDATE users SET gift=? where username=?'
-    params2=[gift,"Aneesh"]
+    params2=[gift,user_name]
     await db.run(query2,params2);
 }
 
@@ -32,7 +32,7 @@ module.exports.transfer=async(req,res)=>{
         await trans2;
         res.json({message:"congratz"})
     }else{
-        res.json({message:"alreadly redeed"})
+        res.json({message:"alreadly redeemed"})
     }
 
 

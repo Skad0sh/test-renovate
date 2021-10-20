@@ -36,7 +36,7 @@ app.use((req,res,next)=>{
 });
 app.get('/',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/index.html'))});
 app.get('/cart',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/cart.html'))});
-app.get('/cart',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/race.html'))});
+app.get('/gift',(req,res)=>{res.sendFile(path.resolve(__dirname,'./static/race.html'))});
 app.get('/api/products',cart.products);
 app.get('/api/user',cart.user);
 app.get('/api/cart',cart.show_cart);
