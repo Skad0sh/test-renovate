@@ -90,10 +90,6 @@ products=async()=>{
        if(result[i].buy===1){
         render_buy(result[i].pid,result[i].p_name,result[i].price)
        }
-       else if(result[i].pid==1)
-       {
-        render_not(result[i].pid,result[i].p_name,result[i].price)
-       }
        else{
           render(result[i].pid,result[i].p_name,result[i].price)
        }

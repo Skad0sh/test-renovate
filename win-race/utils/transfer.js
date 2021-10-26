@@ -23,6 +23,8 @@ module.exports.transfer=async(req,res)=>{
     if(!req.body.code) res.json({message:"Invadid code"})
     let code = req.body.code;
     let user=await db.data(req.session.user);
+    let mes=""
+    console.log(req.session.user)
     let gift=user[0].gift;
     if(gift>=100){
         
@@ -30,17 +32,18 @@ module.exports.transfer=async(req,res)=>{
         const trans2=update_gift(req.session.user);
         await trans1;
         await trans2;
-        res.json({message:"congratz"})
+         mess="congratz";
     }else{
-        res.json({message:"alreadly redeemed"})
+        mess="alreadly redeemed";
     }
+    res.json({message : mess});
 
 
 };
 module.exports.reset=async(req,res)=>{
     const query='UPDATE users SET gift=? where username=?';
     const query2='UPDATE users SET coins=? where username=?'
-    params=[100,"Aneesh"];
+    params=[100,"a"];
     await db.run(query,params);
     await db.run(query2,params);
     res.json({message:"reset completed"})
