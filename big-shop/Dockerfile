@@ -1,5 +1,6 @@
-FROM node
+FROM node:16-slim
 
+RUN apt update && apt upgrade -y
 # Create app directory
 WORKDIR /usr/src/app
 # Install app dependencies
@@ -13,6 +14,8 @@ RUN npm install -g npm
 
 # Bundle app source
 COPY . .
+RUN chown -R node:node /usr/src/app
+USER node
 
 EXPOSE 3000
 CMD [ "node", "app.js" ]

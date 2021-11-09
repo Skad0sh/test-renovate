@@ -7,6 +7,7 @@ const Login=require('./utils/login');
 const cart=require('./utils/cart');
 const multer = require('multer');
 const forms = multer();
+//const PORT=process.env.port
 
 app= express();
 app.use(express.static('./public'));
@@ -44,6 +45,6 @@ app.post('/open',cart.open);
 app.get('/logout',Login.logout);
 
 app.listen(3000,()=>{
-    console.log("server started at port 3000")
+    console.log("server started at port 3000 ")
 });
 

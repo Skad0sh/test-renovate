@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>figo</title>
+       <link rel="stylesheet" href="{{url_for('static',filename='main.css')}}">
+    </head>
+    <body>
+        <pre><h1>figlet As a Service</h1></pre>
+        
+        <form action="/" method="POST">
+            <input type="text" name="name" class="question" id="nme" required autocomplete="off" />
+            <button type="submit"class="btn-hover color-1">submit</button>
+          </form>
+        <pre class="out">  
+            {% if output %}
+            <p><b>{{output}}</b></p>
+            {% endif%}
+        </pre>
+    </body>
+</html>
