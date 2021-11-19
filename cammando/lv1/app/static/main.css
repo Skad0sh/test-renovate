@@ -1,4 +1,4 @@
-pre{
+.header {
     background: linear-gradient(
       to right, 
       hsl(98 100% 62%), 
@@ -17,7 +17,7 @@ pre{
     min-block-size: 100%;
     min-inline-size: 100%;
     box-sizing: border-box;
-    display: grid;
+    
     place-content: center;
     font-family: system-ui;
     font-size: min(200%, 5vmin);
@@ -46,8 +46,11 @@ form input
     font-family: Nunito;
     color: #06f068;
     font-size:18px;
+    margin-left: 37%;
+    margin-top: 10px;
     padding:10px 10px 10px 5px;
     border: none;
+    position:relative;
     border-bottom:1px solid #4adf7c;
     background-color: transparent;
 }
