@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cookie</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='main.css') }}">
+    </head>
+    <body>
+       <a href="{{url_for('logout')}}" style="text-decoration: none;color: wheat;">logout</a>
+        {%if flag%}
+        <div class='speech-bubble'><p>here is your flag {{flag}}</p></div>
+        {% else %}
+        <div class='speech-bubble'>Hello! gimme admin cookie,i'll give you flag</div>
+        {% endif%}
+        <img src="{{url_for('static',filename='boy.png')}}">
+    </body>
+</html>
