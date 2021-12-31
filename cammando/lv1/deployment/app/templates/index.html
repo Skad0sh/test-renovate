@@ -22,6 +22,9 @@
             <input type="text" name="name" class="question" placeholder="Enter text" id="nme" required autocomplete="off" />
             <button type="submit"class="btn-hover color-1">submit</button>
           </form>
+          {%if error %}
+          <p class="danger">{{error}}</p>
+          {% endif %}
         <pre class="out">  
             {% if output %}
             <p><b>{{output}}</b></p>

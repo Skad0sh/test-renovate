@@ -14,7 +14,7 @@ figlet-I is not safe,So here is a safer version, try to hack it :)
 
 ### Flag
 
-inctfj{Hack3rr!!_F1gl3t_l3v3l_2_c0mplet3d}
+inctf{Hack3rr!!_F1gl3t_l3v3l_2_c0mplet3d}
 
 ### Author
 

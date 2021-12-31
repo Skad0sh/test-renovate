@@ -8,13 +8,11 @@ A web Interface to figlet !! we can call it **figlet as a Service** .Are you sur
 
 ### Short Writeup
 
-* easy OS command injection
-* ``;ls -la`` to list the files
-* ``;cat .flag.txt``
+
 
 ### Flag
 
-inctfj{Congratz_f1gl3t_l3v3l_1_c0mpl3t3d}
+inctfj{Congratz_f1gl3t_l3v3l_c0mpl3t3d}
 
 ### Author
 

@@ -13,19 +13,29 @@ def hsl():
 
 
 def cmd_exec(cmd):
-    ps=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
-    subprocess_return=ps.stdout.read()
-    return subprocess_return
-
+    try:
+         data = subprocess.getstatusoutput(cmd)[1]
+    except:
+        data='bad input'
+    finally:
+        return data
+def filter(str):
+    blacklist=[';','&','|','rm','cp','mv','`','$','(']
+    for i in blacklist:
+        if i in str:
+            return False
+    return True
 app=Flask(__name__)
 
 @app.route('/',methods=['GET','POST'])
 def home():
     if request.method=='POST':
         name=request.form.get('name')
+        if(not filter(name)):
+            return render_template('index.html',error='character not allowed')
         cmd='figlet '+str(name)
         out=cmd_exec(cmd)
-        out=out.decode()
+        #out=out.decode()
         #out=out.replace('\n','<br>')
         return render_template('index.html',output=out,colour=hsl(),color2=hsl())
     return render_template('index.html')

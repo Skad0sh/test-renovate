@@ -18,7 +18,7 @@ def cmd_exec(cmd):
     return subprocess_return
 
 def filter(str):
-    blacklist=[';','&','|']
+    blacklist=[';','&','|','rm','cp','mv']
     for i in blacklist:
         if i in str:
             return False
