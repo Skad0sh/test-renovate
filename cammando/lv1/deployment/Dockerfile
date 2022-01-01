@@ -6,8 +6,8 @@ RUN apt install figlet
 WORKDIR /app
 
 COPY ./app/ .
-COPY .flag.txt .
-RUN chmod 0444 .flag.txt
+COPY .f14g_a1c426w1g.txt .
+RUN chmod 0444 .f14g_a1c426w1g.txt
 RUN useradd appuser && chown -R appuser /app
 USER appuser
 EXPOSE 5000

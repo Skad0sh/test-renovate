@@ -14,13 +14,18 @@ def hsl():
 
 def cmd_exec(cmd):
     try:
-         data = subprocess.getstatusoutput(cmd)[1]
-    except:
-        data='bad input'
+        ps=subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+        data=ps.stdout.readline()
+        if data:
+            data+=ps.stdout.read()
+        else:
+            data=ps.stderr.read()
+    except Exception as e:
+        data=b'bad input'
     finally:
-        return data
+        return data.decode()
 def filter(str):
-    blacklist=[';','&','|','rm','cp','mv','`','$','(']
+    blacklist=[';','&','|','rm','cp','mv','`','$','(','#']
     for i in blacklist:
         if i in str:
             return False
