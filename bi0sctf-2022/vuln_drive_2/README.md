@@ -16,4 +16,4 @@ bi0sCTF{dfae5409d}
 
 ### Author
 
-**Challenge Author Name(s)**
+[ma1f0y](https://twitter.com/mal_f0y)
